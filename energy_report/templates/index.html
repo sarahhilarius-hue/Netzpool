@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Energieauswertung</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#f4f6f8;color:#202124}
+main{max-width:1100px;margin:30px auto;padding:24px}
+.card{background:white;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 2px 10px #0001}
+h1{margin-top:0}.grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+label{font-weight:600;display:block;margin-bottom:6px}
+input,select,button{width:100%;box-sizing:border-box;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+button{background:#1976d2;color:white;border:0;font-weight:700;cursor:pointer;margin-top:20px}
+.total{font-size:42px;font-weight:800}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px;border-bottom:1px solid #eee;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.error{background:#fee;padding:14px;border-radius:8px;color:#900}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<div class="card">
+<h1>⚡ Energieauswertung</h1>
+<form method="post" action="{{ url_for('calc') }}">
+<div class="grid">
+<div>
+<label>Energy-Sensor</label>
+<select name="entity">
+{% for sensor in sensors %}
+<option value="{{ sensor }}" {% if sensor == selected %}selected{% endif %}>{{ sensor }}</option>
+{% endfor %}
+</select>
+</div>
+<div>
+<label>Von</label>
+<input type="date" name="start" value="{{ form.get('start','2025-01-01') }}">
+</div>
+<div>
+<label>Bis</label>
+<input type="date" name="end" value="{{ form.get('end','2025-12-31') }}">
+</div>
+<div>
+<label>Uhrzeit von</label>
+<input type="time" name="from_time" value="{{ form.get('from_time','19:00') }}">
+</div>
+<div>
+<label>Uhrzeit bis</label>
+<input type="time" name="to_time" value="{{ form.get('to_time','23:30') }}">
+</div>
+</div>
+<button type="submit">⚡ Verbrauch berechnen</button>
+</form>
+</div>
+
+{% if error %}
+<div class="card error"><strong>Fehler:</strong> {{ error }}</div>
+{% endif %}
+
+{% if total is not none %}
+<div class="card">
+<div>Gesamtverbrauch im gewählten Zeitraum</div>
+<div class="total">{{ "%.3f"|format(total) }} kWh</div>
+<div>{{ valid_days }} Tage mit vollständigen Messwerten</div>
+</div>
+
+<div class="card">
+<h2>Tageswerte</h2>
+<table>
+<tr><th>Datum</th><th>Start kWh</th><th>Ende kWh</th><th>Verbrauch kWh</th></tr>
+{% for r in result %}
+<tr>
+<td>{{ r.date }}</td>
+<td>{{ "%.3f"|format(r.start) if r.start is not none else "—" }}</td>
+<td>{{ "%.3f"|format(r.end) if r.end is not none else "—" }}</td>
+<td>{{ "%.3f"|format(r.consumption) if r.consumption is not none else "—" }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endif %}
+</main>
+</body>
+</html>
