@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-DB = "/config/home-assistant_v2.db"
+DB = "/homeassistant/home-assistant_v2.db"
 TZ = ZoneInfo("Europe/Berlin")
 DEFAULT_ENTITY = "sensor.shellyplus1pm_345f452134cc_switch_0_energy"
 
