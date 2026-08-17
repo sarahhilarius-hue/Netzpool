@@ -18,6 +18,7 @@ panel_title: Energieauswertung
 map:
   - type: homeassistant_config
     read_only: true
+    path: /homeassistant
 
 options: {}
 schema: {}
