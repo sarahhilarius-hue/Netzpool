@@ -1,20 +1,23 @@
 name: Energy Report
-version: "1.0.0"
+version: "1.0.1"
 slug: energy_report
-description: Weboberfläche zur Auswertung von Home Assistant Energy Sensoren aus dem Recorder
+description: Weboberfläche zur Auswertung von Home Assistant Energy Sensoren
 arch:
   - aarch64
+
 startup: application
 boot: auto
 init: false
+
 ingress: true
 ingress_port: 8099
+
 panel_icon: mdi:chart-line
 panel_title: Energieauswertung
+
 map:
   - type: homeassistant_config
     read_only: true
-ports:
-  8099/tcp: null
+
 options: {}
 schema: {}
