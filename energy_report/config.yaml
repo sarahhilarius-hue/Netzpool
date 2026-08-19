@@ -1,5 +1,5 @@
 name: Energy Report
-version: "1.0.3"
+version: "1.0.4"
 slug: energy_report
 description: Weboberfläche zur Auswertung von Home Assistant Energy Sensoren
 arch:
