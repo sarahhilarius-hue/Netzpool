@@ -1,5 +1,5 @@
 name: Energy Report
-version: "2.0.0"
+version: "2.0.1"
 slug: energy_report
 description: Weboberfläche zur Auswertung von Home Assistant Energy Sensoren
 arch:
@@ -18,7 +18,6 @@ panel_title: Energieauswertung
 map:
   - type: homeassistant_config
     read_only: true
-    path: /homeassistant
 
 options: {}
 schema: {}
